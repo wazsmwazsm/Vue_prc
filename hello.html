@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+  <div id="app">
+    <p>{{ message }}</p>
+  </div>
+
+  <div id="app-2">
+    <span v-bind:title="title">
+      鼠标悬停几秒钟查看此处动态绑定的提示信息！
+    </span>
+  </div>
+
+  <div id="app-3">
+    <p v-if="seen">你看见我了</p>
+  </div>
+
+  <div id="app-4">
+    <ol>
+      <li v-for="todo in todos">
+        {{ todo.text }}
+      </li>
+    </ol>
+  </div>
+
+  <div id="app-5">
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">反转</button>
+  </div>
+
+  <div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+  </div>
+
+  <div id="app-7">
+    <ol>
+      <!-- 现在我们为每个todo-item提供待办项对象    -->
+      <!-- 待办项对象是变量，即其内容可以是动态的 -->
+      <todo-item v-for="item in groceryList" v-bind:todo='item'></todo-item>
+    </ol>
+  </div>
+  <script src="./vue.js"></script>
+  <script type="text/javascript">
+    // 绑定文本
+    var app = new Vue({
+      el : '#app',
+      data :{
+        message : 'Hello Vue.js'
+      }
+    });
+
+    // 绑定 attribute
+    var app2 = new Vue({
+      el : '#app-2',
+      data : {
+        title : '页面加载于 ' + new Date()
+      }
+    });
+
+    // 条件控制
+    var app3 = new Vue({
+      el : '#app-3',
+      data : {
+        seen : true
+      }
+    });
+
+    // for 循环
+    var app4 = new Vue({
+      el : "#app-4",
+      data : {
+        todos : [
+          { text : '第一个'},
+          { text : '第二个'},
+          { text : '第三个'}
+        ]
+      }
+    });
+
+    // v-on 绑定事件
+    var app5 = new Vue({
+      el : '#app-5',
+      data : {
+        message : 'Hello Vue.js!'
+      },
+      methods : {
+        reverseMessage : function() {
+          this.message = this.message.split('').reverse().join('')
+        }
+      }
+    });
+
+    // v-model 双向数据绑定
+    var app6 = new Vue({
+      el : '#app-6',
+      data : {
+        message : '修改我呀'
+      }
+    });
+
+    // 组件化, 解耦
+    Vue.component('todo-item', {
+      props : ['todo'], // 获取自定义属性 todo
+      template : '<li>{{ todo.text }}</li>'
+    });
+
+    var app7 = new Vue({
+      el : '#app-7',
+      data : {
+        groceryList : [
+          { text: '蔬菜' },
+          { text: '奶酪' },
+          { text: '香草' }
+        ]
+      }
+    });
+
+  </script>
+  </body>
+</html>
