@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="example">
+
+    </div>
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+
+      var data = { a: 1};
+      var vm = new Vue({
+          el: '#example',
+          data: data
+      });
+
+      // 获取 vm 的实例属性 (vm实例自己的, 非 data 的)
+      console.log(vm.$data === data);
+      console.log(vm.$el === document.getElementById('example'));
+
+      // vm 的实例方法
+      // watch vm.a
+      vm.$watch('a', function (newValue, oldValue) {
+          console.log('a 改变了：'+oldValue+' ==> '+newValue);
+      });
+
+  </script>
+  </body>
+</html>
