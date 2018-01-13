@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+      <button id="btn" v-bind:disabled="isButtonDisabled" v-on:click="disableBtn">点我</button>
+
+      <div id="app1">
+        <!-- 只能包含单个表达式, 语句 (赋值) 和流程控制不会生效 (请用三元表达式) -->
+        <p>{{ number + 1 }}</p>
+        <p>{{ ok ? 'YES' : 'NO' }}</p>
+        <p>{{ message.split('').reverse().join('') }}</p>
+        <div v-bind:id="'list-' + id"> <!-- 这里的字符串中也能写表达式 -->
+          <p>hello</p>
+        </div>
+        <!-- 属性绑定 -->
+        <a v-bind:href="url"></a>
+        <!-- v-on: 的修饰符 参见文档 -->
+        <!-- @为 v-on: 的简写形式 -->
+        <a @click.prevent href="http://www.ab.com">点我不动</a>
+        <!-- :为 v-bind: 的缩写 -->
+        <br>
+        <a :href="url">ab</a>
+      </div>
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      var vm = new Vue({
+          el: '#btn',
+          data: {
+              isButtonDisabled : false
+          },
+          methods: {
+              disableBtn : function() {
+                  this.isButtonDisabled = true
+              }
+          }
+      });
+
+      var vm = new Vue({
+          el: '#app1',
+          data: {
+              id: 10,
+              number : 20,
+              ok: true,
+              message: 'hello world!',
+              url: 'http://www.baiud.com'
+          }
+      });
+
+
+  </script>
+  </body>
+</html>
