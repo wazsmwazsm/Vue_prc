@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app1">
+      <div v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username">
+      </div>
+      <div v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address">
+      </div>
+      <button @click="changeType">点我切换</button>
+    </div>
+
+    <!-- 使用 key 来声明两个元素是独立的 -->
+    <div id="app2">
+      <div v-if="loginType === 'username'">
+        <label>Username</label>
+        <input placeholder="Enter your username" key="username-input">
+      </div>
+      <div v-else>
+        <label>Email</label>
+        <input placeholder="Enter your email address" key="email-input">
+      </div>
+      <button @click="changeType">点我切换</button>
+    </div>
+
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      /*
+
+      Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。
+      这么做除了使 Vue 变得非常快之外，还有其它一些好处
+
+      切换 loginType 将不会清除用户已经输入的内容。
+      因为两个模板使用了相同的元素，<input> 不会被替换掉——仅仅是替换了它的 placeholder。
+
+      */
+      new Vue({
+          el: '#app1',
+          data: {
+              loginType: 'username'
+          },
+          methods: {
+              changeType: function () {
+                  this.loginType = (this.loginType == 'username') ? 'email' : 'username';
+              }
+          }
+      });
+
+      new Vue({
+          el: '#app2',
+          data: {
+              loginType: 'username'
+          },
+          methods: {
+              changeType: function () {
+                  this.loginType = (this.loginType == 'username') ? 'email' : 'username';
+              }
+          }
+      });
+  </script>
+  </body>
+</html>
