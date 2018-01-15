@@ -18,7 +18,11 @@
           data: {
               message : "Hello"
           },
+          // 和方法不同, 计算属性是基于它们的依赖进行缓存的。
+          // 计算属性只有在它的相关依赖发生改变时才会重新求值
+          // 不太适合 Date.now() 这样要随时刷新的情况 (需要大量计算的情况可以用计算属性)
           computed: {
+              // 注意，这里计算属性就是一个属性（和 message 一样），定义为 methods 才能进行调用
               reversedMessage: function() {
                   // `this` 指向 vm 实例
                   return this.message.split('').reverse().join('');

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="watch-example">
+      <p>
+          Ask a yes/no question:
+          <input v-model="question">
+      </p>
+      <p>
+          {{ answer }}
+      </p>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      var watchExampleVM = new Vue({
+          el: '#watch-example',
+          data: {
+              question: '',
+              answer: 'I cannot give you an answer until you ask a question!'
+          },
+          watch: {
+              // 监测 question 的改变
+              question: function (newQuestion) {
+                  this.answer = 'Waiting for you to stop typing...';
+                  this.getAnswer();
+              }
+          },
+          // `_.debounce` 是一个 Lodash 的方法, 这里直接用 getAnswer 调用
+          // 它的返回值也是一个函数(包裹后的第一个参数的回调)
+          methods: {
+              getAnswer: _.debounce(function () {
+                  // 如果没有输入 ? 结尾
+                  if(this.question.indexOf('?') === -1) {
+                      this.answer = 'Questions usually contain a question mark. ;-)';
+                      return;
+                  }
+
+                  this.answer = 'Thinking'
+                  var vm = this
+                  axios.get('https://yesno.wtf/api')
+                       .then(function (response) {
+                          vm.answer = _.capitalize(response.data.answer)
+                       })
+                       .catch(function (error) {
+                          vm.answer = 'Error! Could not reach the API. ' + error
+                       });
+              }, 500)
+          }
+      });
+
+  </script>
+  </body>
+</html>
