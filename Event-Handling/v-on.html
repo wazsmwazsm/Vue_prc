@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+      <!-- 运行一些 JavaScript 代码 -->
+      <div id="app1">
+          <button v-on:click="counter += 1">Add 1</button>
+          <p>The button above has been clicked {{ counter }} times.</p>
+      </div>
+      <!-- 绑定方法 -->
+      <div id="app2">
+        <button v-on:click="greet">Greet</button>
+      </div>
+      <!-- 除了直接绑定到一个方法，也可以在内联 JavaScript 语句中调用方法 -->
+      <div id="app3">
+        <button v-on:click="say('hi')">Say hi</button>
+        <button v-on:click="say('what')">Say what</button>
+      </div>
+      <!-- 有时也需要在内联语句处理器中访问原始的 DOM 事件。可以用特殊变量 $event 把它传入方法 -->
+      <div id="app4">
+        <form action="" method="post">
+          <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+            Submit
+          </button>
+        </form>
+      </div>
+
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+
+      var app1 = new Vue({
+          el: '#app1',
+          data: {
+              counter: 0
+          }
+      })
+      /*
+        然而许多事件处理逻辑会更为复杂，所以直接把 JavaScript 代码写在 v-on 指令中是不可行的。
+        因此 v-on 还可以接收一个需要调用的方法名称。
+      */
+      var app2 = new Vue({
+          el: '#app2',
+          data: {
+              name: 'Vue.js'
+          },
+          methods: {
+              greet: function (event) {
+                  // `this` 在方法里指向当前 Vue 实例
+                  alert('Hello ' + this.name + '!');
+                  // `event` 是原生 DOM 事件
+                  if(event) {
+                      alert(event.target.tagName);
+                  }
+              }
+          }
+      });
+      // 也可以用 JavaScript 直接调用方法
+      // app2.greet() // => 'Hello Vue.js!'
+
+      var app3 = new Vue({
+          el: '#app3',
+          methods: {
+              say: function (message) {
+                  alert(message);
+              }
+          }
+      })
+
+      var app4 = new Vue({
+          el: '#app4',
+          methods: {
+              warn: function (message, event) {
+                  if (event) event.preventDefault();
+                  alert(message);
+              }
+          }
+      })
+  </script>
+  </body>
+</html>
