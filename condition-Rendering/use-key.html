@@ -6,27 +6,27 @@
   </head>
   <body>
     <div id="app1">
-      <div v-if="loginType === 'username'">
+      <template v-if="loginType === 'username'">
         <label>Username</label>
         <input placeholder="Enter your username">
-      </div>
-      <div v-else>
+      </template>
+      <template v-else>
         <label>Email</label>
         <input placeholder="Enter your email address">
-      </div>
+      </template>
       <button @click="changeType">点我切换</button>
     </div>
 
     <!-- 使用 key 来声明两个元素是独立的 -->
     <div id="app2">
-      <div v-if="loginType === 'username'">
+      <template v-if="loginType === 'username'">
         <label>Username</label>
         <input placeholder="Enter your username" key="username-input">
-      </div>
-      <div v-else>
+      </template>
+      <template v-else>
         <label>Email</label>
         <input placeholder="Enter your email address" key="email-input">
-      </div>
+      </template>
       <button @click="changeType">点我切换</button>
     </div>
 

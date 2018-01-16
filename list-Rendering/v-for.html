@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app1">
+      <!-- 一段取值范围的 -->
+      <span v-for="n in 10">{{ n }} </span>
+    </div>
+    <!-- v-for on a <template> -->
+    <!-- 利用带有 v-for 的 <template> 标签渲染多个元素 -->
+    <ul id="app2">
+        <template v-for="item in items">
+          <li>{{ item.msg }}</li>
+          <li class="divider">我们不一样~</li>
+        </template>
+    </ul>
+
+    <ul id="app3">
+      <li v-for="todo in todos" v-if="!todo.isComplete">{{ todo.msg }}</li>
+    </ul>
+
+    <div id="app4">
+      <ul v-if="todos.length">
+          <li v-for="todo in todos">
+              {{ todo.msg }}
+          </li>
+      </ul>
+      <p v-else>No todos left!</p>
+    </div>
+
+
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      var vm1 = new Vue({
+          el: '#app1'
+      });
+
+      var vm2 = new Vue({
+          el: '#app2',
+          data: {
+            items: [
+              { msg: 'hello'},
+              { msg: 'world'}
+            ]
+          }
+      });
+
+      var vm3 = new Vue({
+          el: '#app3',
+          data: {
+            todos: [
+              { isComplete: true, msg: 'hello'},
+              { isComplete: false, msg: 'world'}
+            ]
+          }
+      });
+
+      var vm4 = new Vue({
+          el: '#app4',
+          data: {
+            todos: [
+              { isComplete: true, msg: 'hello'},
+              { isComplete: false, msg: 'world'}
+            ]
+          }
+      });
+  </script>
+  </body>
+</html>
