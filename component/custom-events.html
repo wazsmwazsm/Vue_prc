@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="counter-event-example">
+      <p>{{ total }}</p>
+      <button-counter v-on:increment="incrementTotal"></button-counter>
+      <button-counter v-on:increment="incrementTotal"></button-counter>
+    </div>
+
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      /*
+      每个 Vue 实例都实现了事件接口，即：
+        1、使用 $on(eventName) 监听事件
+        2、使用 $emit(eventName) 触发事件
+      */
+      Vue.component('button-counter', {
+          template: '<button v-on:click="incrementCounter">{{ counter }}</button>',
+          data: function () {
+              return { counter: 0 }
+          },
+          methods: {
+              incrementCounter: function () {
+                  this.counter += 1
+                  this.$emit('increment')
+              }
+          }
+      });
+
+      new Vue({
+          el: '#counter-event-example',
+          data: {
+              total: 0
+          },
+          methods: {
+              incrementTotal: function () {
+                  this.total += 1
+              }
+          }
+      });
+      /*
+        给组件绑定原生事件
+          可以使用 v-on 的修饰符 .native
+          <my-component v-on:click.native="doTheThing"></my-component>
+      */
+
+      /*
+        .sync 2.3.0 修饰符 对一个 prop 进行“双向绑定” 它破坏了单向数据流
+
+      */
+      
+  </script>
+  </body>
+</html>

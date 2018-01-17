@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app1">
+        <!-- 如果传入不符合验证，会警告 -->
+        <example v-bind:prop-a="1" prop-c="hello"></example>
+    </div>
+
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      // 我们可以为组件的 prop 指定验证规则。如果传入的数据不符合要求，
+      // Vue 会发出警告。这对于开发给他人使用的组件非常有用。
+
+      Vue.component('example', {
+          props: {
+            // 基础类型检测 (`null` 指允许任何类型)
+            propA: Number,
+            // 可能是多种类型
+            propB: [String, Number],
+            // 必传且是字符串
+            propC: {
+              type: String,
+              required: true
+            },
+            // 数值且有默认值
+            propD: {
+              type: Number,
+              default: 100
+            },
+            // 数组/对象的默认值应当由一个工厂函数返回
+            propE: {
+              type: Object,
+              default: function () {
+                return { message: 'hello' }
+              }
+            },
+            // 自定义验证函数
+            propF: {
+              validator: function (value) {
+                return value > 10
+              }
+            }
+          },
+          template: '<span>{{ propA + propC }}</span>'
+      });
+
+      new Vue({
+          el: '#app1'
+      });
+
+      /*
+      type 可以是下面原生构造器：
+        String
+        Number
+        Boolean
+        Function
+        Object
+        Array
+        Symbol
+
+        type 也可以是一个自定义构造器函数，使用 instanceof 检测。
+        prop 会在组件实例创建之前进行校验，所以在 default 或 validator 函数里，
+        诸如 data、computed 或 methods 等实例属性还无法使用
+      */
+
+      // 非 Prop 特性 , 见官方文档
+      // <bs-date-input data-3d-date-picker="true"></bs-date-input>
+      // data-3d-date-picker 是样式的话 这个操作不会影响原有 class, 会合并样式
+
+  </script>
+  </body>
+</html>
