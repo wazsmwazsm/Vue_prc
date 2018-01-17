@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form id="app1" action="" method="post">
+      <h2>绑定静态属性</h2>
+      <!-- 对于单选按钮，复选框及选择框的选项，
+      v-model 绑定的值通常是静态字符串 (对于复选框也可以是布尔值)： -->
+      <!-- 当选中时，`picked` 为字符串 "a" -->
+      <input type="radio" v-model="picked" value="a">
+      <!-- `toggle` 为 true 或 false -->
+      <input type="checkbox" v-model="toggle">
+      <!-- 当选中时，`selected` 为字符串 "abc" -->
+      <select v-model="selected">
+        <option value="abc">ABC</option>
+      </select>
+
+      <hr>
+
+      <h2>绑定动态属性</h2>
+      <p>复选框</p>
+      <!-- 这里的 true-value 和 false-value 特性并不会影响输入控件的 value 特性，
+      因为浏览器在提交表单时并不会包含未被选中的复选框。
+      如果要确保表单中这两个值中的一个能够被提交，(比如“yes”或“no”)，请换用单选按钮。 -->
+      <input type="checkbox"
+        type="checkbox"
+        v-model="toggle2"
+        true-value="yes"
+        false-value="no"
+      >
+      <p>单选按钮</p>
+      <!-- 绑定 vm 变量 -->
+      <input type="radio" v-model="pick" v-bind:value="ha">
+      <!-- 当选中时 vm.pick === vm.a -->
+      <p>选择框的选项</p>
+      <select v-model="selected2">
+          <!-- 内联对象字面量 -->
+          <option v-bind:value="{ number: 123}">123</option>
+          <!-- 当选中时  typeof vm.selected // => 'object'
+                        vm.selected.number // => 123
+          -->
+      </select>
+      <h2>修饰符</h2>
+      <p>.lazy</p>
+      <!-- 在“change”时而非“input”时更新 -->
+      <input v-model.lazy="msg">
+      <p>.number</p>
+      <input v-model.number="age" type="number">
+      <p>.trim</p>
+      <input v-model.trim="msg">
+    </form>
+
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      var app1 = new Vue({
+          el: '#app1',
+          data: {
+            picked: '', // console 进行输出测试
+            pick: '',
+            ha: 'hahahahahhaha',
+            toggle: '',
+            toggle2: '',
+            selected: '',
+            selected2: '',
+            msg: '',
+            age: 0,
+
+          }
+      });
+
+      /*
+        修饰符
+          .lazy
+          在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步
+          (除了上述输入法组合文字时)。你可以添加 lazy 修饰符，从而转变为使用 change 事件进行同步：
+
+          .number 如果想自动将用户的输入值转为数值类型，可以给 v-model 添加 number 修饰符
+
+          .trim 如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符
+
+
+        在组件上使用 v-model
+          HTML 原生的输入元素类型并不总能满足需求。
+          幸好，Vue 的组件系统允许你创建具有完全自定义行为且可复用的输入组件。
+          这些输入组件甚至可以和 v-model 一起使用
+
+
+      */
+  </script>
+  </body>
+</html>

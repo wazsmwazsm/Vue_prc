@@ -9,18 +9,18 @@
     <!-- v-model 会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 Vue 实例的数据作为数据来源。
     你应该通过 JavaScript 在组件的 data 选项中声明初始值。 -->
     <form id="app1" action="" method="post">
-        <p>input</p>
+        <h2>input</h2>
         <input v-model="message" placeholder="edit me">
         <p>Message is: {{ message }}</p>
-        <p>多行文本</p>
+        <h2>多行文本</h2>
         <span>Multiline message is:</span>
         <p style="white-space: pre-line;">{{ message }}</p>
         <br>
         <textarea v-model="message" placeholder="add multiple lines"></textarea>
-        <p>复选框</p>
+        <h2>复选框</h2>
         <input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{ checked }}</label>
-        <p>个复选框，绑定到同一个数组</p>
+        <h2>个复选框，绑定到同一个数组</h2>
         <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
         <label for="jack">Jack</label>
         <input type="checkbox" id="john" value="John" v-model="checkedNames">
@@ -29,7 +29,7 @@
         <label for="mike">Mike</label>
         <br>
         <span>Checked names: {{ checkedNames }}</span>
-        <p>单选按钮 </p>
+        <h2>单选按钮 </h2>
         <input type="radio" id="one" value="One" v-model="picked">
         <label for="one">One</label>
         <br>
@@ -37,7 +37,7 @@
         <label for="two">Two</label>
         <br>
         <span>Picked: {{ picked }}</span>
-        <p>单选框</p>
+        <h2>单选框</h2>
         <select v-model="selected">
           <!-- 添加一个空值防止不同浏览器的异同 -->
           <option disabled value="">请选择</option>
@@ -46,7 +46,7 @@
           <option>C</option>
         </select>
         <span>Selected: {{ selected }}</span>
-        <p>多选框</p>
+        <h2>多选框</h2>
         <select v-model="selecteds" multiple style="width: 50px;">
           <option>A</option>
           <option>B</option>
@@ -54,7 +54,7 @@
         </select>
         <br>
         <span>Selected: {{ selecteds }}</span>
-        <p>v-for 绑定渲染单选框</p>
+        <h2>v-for 绑定渲染单选框</h2>
         <select v-model="selectedfor">
           <option v-for="option in options" v-bind:value="option.value">
             {{ option.text }}
