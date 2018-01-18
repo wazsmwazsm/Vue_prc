@@ -7,6 +7,7 @@
   <body>
     <div id="counter-event-example">
       <p>{{ total }}</p>
+      <!-- 父作用域给组件的属性都是往里传的, 自定义事件都是用来监听子组件的, 要给子组件绑定事件要在组件模板中进行 -->
       <button-counter v-on:increment="incrementTotal"></button-counter>
       <button-counter v-on:increment="incrementTotal"></button-counter>
     </div>
@@ -52,7 +53,7 @@
         .sync 2.3.0 修饰符 对一个 prop 进行“双向绑定” 它破坏了单向数据流
 
       */
-      
+
   </script>
   </body>
 </html>

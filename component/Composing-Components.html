@@ -10,6 +10,7 @@
         <!-- HTML 特性是不区分大小写的。
          所以，当使用的不是字符串模板时，camelCase (驼峰式命名) 的 prop
          需要转换为相对应的 kebab-case (短横线分隔式命名) -->
+         <!-- 父作用域给组件的属性都是往里传的, 事件都是用来监听子组件的, 要给子组件绑定事件要在组件模板中进行 -->
         <child message="hello!" my-message="World"></child>
     </div>
     <div id="app2">
