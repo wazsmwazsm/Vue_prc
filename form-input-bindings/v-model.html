@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form id="app" action="" method="post">
+      <h2>v-model(简写语法糖)</h2>
+      <input v-model="message" placeholder="edit me">
+      <p>Message is: {{ message }}</p>
+      <h2>完整版本</h2>
+      <input v-bind:value="message2" v-on:input="message2 = $event.target.value">
+      <p>Message2 is: {{ message2 }}</p>
+    </form>
+
+
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      var vm = new Vue({
+          el: '#app',
+          data: {
+              message : "",
+              message2 : ""
+          }
+      });
+
+  </script>
+  </body>
+</html>
