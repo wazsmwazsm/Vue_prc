@@ -15,7 +15,7 @@
       <!-- 上述代码等价于： -->
       <!--
         <my-checkbox
-          :checked="foo"
+          :checked="foo"  // 当然组件中只有这个传入值有效了, 下面的 change 事件不生效
           @change="val => { foo = val }"
           value="some value">
         </my-checkbox>
