@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+      <div id="app"></div>
+
+  <script src="../vue.js"></script>
+  <script type="text/javascript">
+      const NotFound = { template: '<p>Page not found</p>' };
+      const Home = { template: '<p>home page</p>' };
+      const About = { template: '<p>about page</p>' };
+
+      const routes = {
+          '/': Home,
+          '/about': About
+      };
+
+      var vm = new Vue({
+          el: '#app',
+          data: {
+              currentRoute : window.location.pathname
+          },
+          computed: {
+              ViewComponent () {
+                  return routes[this.currentRoute] || NotFound;
+              }
+          },
+          // h 是 createElement 的简写
+          render (h) { return h(this.ViewComponent) }
+      });
+
+  </script>
+  </body>
+</html>
