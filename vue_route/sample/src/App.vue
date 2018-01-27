@@ -2,6 +2,8 @@
   <div id="app">
     <img src="./assets/logo.png">
     <router-view/>
+    <!-- 命名视图 -->
+    <router-view name="hi"></router-view>
   </div>
 </template>
 
