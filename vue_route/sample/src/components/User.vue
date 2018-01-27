@@ -1,4 +1,5 @@
 <template>
+  <!-- 过度特效 -->
   <div class="user">
     <h1>User {{ $route.params.id }}</h1>
     <p>push_route</p>
@@ -23,6 +24,24 @@ export default {
         console.log(to, from, next)
         // 继续调用
         next()
+    },
+    beforeRouteEnter (to, from, next) {
+      // 登陆验证的一个简单模拟
+      if(to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        // if (!auth.loggedIn()) {
+        if ( false ) { // 这里不实现登陆验证功能, 只做一个模拟
+          next({
+            path: '/login',
+            query: { redirect: to.fullPath }
+          })
+        } else {
+          next()
+        }
+      } else {
+        next()
+      }
     },
     methods: {
         push_route (num) {

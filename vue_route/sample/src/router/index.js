@@ -1,17 +1,29 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import Home from '@/components/Home'
+// import Home from '@/components/Home'
+
+// 懒加载写法
+const Home = () => import('@/components/Home.vue')
+
 import Foo from '@/components/Foo'
 import Bar from '@/components/Bar'
-import User from '@/components/User'
-import UserProfile from '@/components/UserProfile'
-import UserPosts from '@/components/UserPosts'
+
+// import User from '@/components/User'
+// import UserProfile from '@/components/UserProfile'
+// import UserPosts from '@/components/UserPosts'
+
+// 组件按组分块
+const User = () => import(/* webpackChunkName: "group-user" */ '@/components/User.vue')
+const UserProfile = () => import(/* webpackChunkName: "group-user" */ '@/components/UserProfile.vue')
+const UserPosts = () => import(/* webpackChunkName: "group-user" */ '@/components/UserPosts.vue')
+
 import Hi from '@/components/Hi'
 
 import Product from '@/components/Product'
 import Promotion from '@/components/Promotion'
 import Search from '@/components/Search'
+import Login from '@/components/Login'
 
 
 Vue.use(Router)
@@ -39,12 +51,26 @@ export default new Router({
 
   */
   // mode: 'history',
+
+  // 滚动行为
+  scrollBehavior (to, from, savedPosition) {
+      return { x: 0, y: 0 }
+  },
   routes: [
     {
       path: '/',
       name: 'Home', // 命名路由
       component: Home,
-      alias: '/homepage'  // 别名
+      alias: '/homepage',  // 别名
+      beforEnter: (to, from, next) => {
+        console.log('I am beforEnter!');
+        next()
+      }
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/home',
@@ -82,20 +108,23 @@ export default new Router({
           path: 'posts',
           component: UserPosts
         }
-      ]
+      ],
+      // a meta field
+      meta: { requiresAuth: true }
     },
     // 如果 props 被设置为 true，route.params 将会被设置为组件属性
     {
       path: '/Product/:id',
       name: 'Product',
       component:  Product,
-      props: true
+      props: true,
       /*
         // 对于包含命名视图的路由，你必须分别为每个命名视图添加 `props` 选项：
         path: '/user/:id',
         components: { default: User, sidebar: Sidebar },
         props: { default: true, sidebar: false }
       */
+      meta: { requiresAuth: true }
     },
     // 如果 props 是一个对象，它会被按原样设置为组件属性
     {
@@ -111,7 +140,7 @@ export default new Router({
       path: '/Search',
       name: 'Search',
       component: Search,
-      // 语法参见 JavaScript 箭头函数
+      // 语法参见 JavaScript 箭头函数的表达式写法 (防止大括号被识别为函数用圆括号括起来)
       // URL /search?q=vue 会将 {query: 'vue'} 作为属性传递给 SearchUser 组件。
       props: (route) => ({ query: route.query.q })
     }
