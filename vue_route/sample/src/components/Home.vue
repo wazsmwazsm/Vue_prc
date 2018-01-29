@@ -5,7 +5,9 @@
     <router-link to="/foo">Go to Foo</router-link>
     <router-link to="/bar">Go to Bar</router-link>
     <!-- 命名路由的引用 -->
-    <router-link :to="{ name: 'User', params: { id: 12 } }">User 12</router-link>
+    <!-- replace 属性当点击时，会调用 router.replace() 而不是 router.push() -->
+    <!-- 使用 tag 激活外层元素 -->
+    <router-link :to="{ name: 'User', params: { id: 12 } }" replace tag="li"><a>User 12</a></router-link>
   </div>
 </template>
 
