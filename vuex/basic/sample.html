@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="./vue.js"></script>
+    <script src="./vuex.js"></script>
+  </head>
+  <body>
+
+    <div id="app1">
+      <p>{{ count }}</p>
+      <p>
+        <button @click="increment">+</button>
+        <button @click="decrement">-</button>
+        <input v-model.number="seed">
+        <button @click="inc_n(seed)">+{{ seed }}</button>
+      </p>
+    </div>
+    <div id="app2">
+      <p v-for="todo in getTodos">
+        <span>id: {{ todo.id }} text: {{ todo.text }}</span>
+      </p>
+      <p>id: {{ getTodoById.id }} text: {{ getTodoById.text }}</p>
+    </div>
+    <div id="app3">
+      <p>{{ count }}</p>
+      <p>
+        <button @click="increment">+</button>
+      </p>
+    </div>
+
+    <script type="text/javascript">
+    // vuex 用来管理不同组件之间的数据共享通信
+    // 维护一个数据 map, 刷新后会恢复初始值
+    // 只适合单页应用
+
+    const store = new Vuex.Store({
+      state: {
+        count: 0,
+        todos: [
+          { id: 1, text: 'todo1', done: true },
+          { id: 2, text: 'todo2', done: false }
+        ]
+      },
+      mutations: {
+        increment: state => state.count++,
+        decrement: state => state.count--,
+        inc_n: (state, payload) => state.count += payload.amount
+      },
+      // 对 state 做一些处理
+      getters: {
+        doneTodos: state => {
+          return state.todos.filter(todo => todo.done)
+        },
+        // 让 getter 返回一个函数，来实现给 getter 传参
+        getTodoById: (state) => (id) => {
+          return state.todos.find(todo => todo.id === id)
+        }
+      },
+      // action 里面可以写异步的语法, 没有 mutations 必须同步的限制
+      actions: {
+        increment (context) {
+          context.commit('increment')
+        }
+      }
+    })
+
+    // start
+    new Vue({
+      el: '#app1',
+      data: {
+        seed: 0
+      },
+      computed: {
+        count () {
+          return store.state.count
+        }
+      },
+      methods: {
+        increment () {
+          store.commit('increment')  // 出发变更
+        },
+        decrement () {
+          store.commit('decrement')
+        },
+        inc_n (n) {
+          store.commit('inc_n', {
+            amount: n
+          })
+        }
+      }
+    })
+
+    // getter
+    new Vue({
+      el: '#app2',
+      store, // 注入 store 组件内使用 this.$store 访问
+      computed: {
+        getTodos () {
+          return this.$store.getters.doneTodos
+        },
+        getTodoById () {
+          return this.$store.getters.getTodoById(2)
+        }
+      }
+    })
+
+    // dispatch
+    new Vue({
+      el: '#app3',
+      store,
+      data: {
+        seed: 0
+      },
+      computed: {
+        count () {
+          return store.state.count
+        }
+      },
+      methods: {
+        increment () {
+          this.$store.dispatch('increment')
+        }
+      }
+    })
+
+    </script>
+  </body>
+</html>
